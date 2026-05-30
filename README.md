@@ -1,203 +1,181 @@
-# 🛢️ Iran War Oil Price Analysis — EDA
+# 🛢️ Iran War Oil Price Intelligence Dashboard
 
-> Exploratory Data Analysis of global oil price dynamics during the Iran War conflict, using verified daily data from America's 50-State Pump (published by Euronews).
+An interactive Streamlit dashboard that analyzes the impact of the 2026 Iran-Israel-US conflict on global oil markets, crude oil benchmarks, fuel prices, shipping activity, and oil production. This project demonstrates how geopolitical events influence energy markets through data analytics, visualization, and business intelligence techniques.
+
+## 🚀 Live Demo
+
+🔗 Streamlit Dashboard: https://your-streamlit-app-link.streamlit.app
+
+> Replace the above URL with your deployed Streamlit application link.
 
 ---
 
-## 📌 Overview
+## 📌 Project Overview
 
-This project investigates the relationship between geopolitical conflict and global energy markets. Using daily oil pricing data alongside shipping activity through the **Strait of Hormuz**, the analysis reveals how armed conflict drives price volatility across the world's major crude oil benchmarks.
+The Iran War Oil Price Intelligence Dashboard provides a comprehensive analysis of oil market behavior during the 2026 Iran conflict. The dashboard tracks crude oil prices, fuel prices, shipping activity through the Strait of Hormuz, and Iran's oil production levels.
+
+The application allows users to explore market trends, compare oil benchmarks, analyze war-related events, and identify key factors affecting global energy prices.
 
 ---
 
 ## 🎯 Objectives
 
-1. Analyze the **impact of geopolitical events** on global oil prices
-2. **Compare oil benchmarks** — Brent, WTI, and Dubai
-3. Examine the **relationship between crude and retail fuel prices**
-4. Analyze **shipping activity** through the Strait of Hormuz across war phases
+- Analyze the impact of geopolitical conflicts on oil prices.
+- Monitor Brent, WTI, and Dubai crude oil benchmarks.
+- Study fuel price fluctuations during supply disruptions.
+- Track shipping activity through the Strait of Hormuz.
+- Measure changes in Iran's oil production.
+- Build an interactive business intelligence dashboard using Streamlit.
 
 ---
 
-## 📁 Repository Structure
+## 📊 Dashboard Features
 
-```
-iran-war-oil-price-eda/
+### 📈 Interactive Analytics
+- Brent vs WTI vs Dubai price comparison
+- Oil price trend analysis
+- Brent-WTI price spread visualization
+- Correlation heatmaps
+- Phase-wise market analysis
+- Oil price vs fuel price relationships
+
+### 🔍 Data Explorer
+- Dynamic filtering options
+- Brent price range selection
+- Phase-wise exploration
+- Descriptive statistics
+- Aggregation and summary reports
+
+### ⚡ War Timeline Analysis
+- Conflict event tracking
+- Oil market reactions
+- Supply disruption monitoring
+- Production decline analysis
+
+### 📋 Project Summary
+- Key findings
+- Strategic insights
+- Market impact assessment
+- Conflict phase breakdown
+
+---
+
+## 📂 Dataset Information
+
+The dataset contains daily observations covering:
+
+- Date
+- Brent Crude Oil Price
+- WTI Crude Oil Price
+- Dubai Crude Oil Price
+- US Gasoline Price
+- US Diesel Price
+- Strait of Hormuz Daily Ship Count
+- Iran Oil Production
+- War Day Tracking
+- Conflict Phase
+- Major War Events
+
+---
+
+## 🛠️ Technologies Used
+
+- Python
+- Streamlit
+- Pandas
+- NumPy
+- Plotly
+- Matplotlib
+- Seaborn
+
+---
+
+## 📈 Key Insights
+
+- Brent crude prices surged significantly during the conflict period.
+- US gasoline and diesel prices increased due to supply concerns.
+- Strait of Hormuz shipping activity declined sharply.
+- Iran's oil production dropped throughout the conflict.
+- The Brent-WTI price spread widened as geopolitical uncertainty increased.
+- Oil prices remained elevated across all conflict phases.
+
+---
+
+## 📁 Project Structure
+
+```text
+Iran-War-Oil-Dashboard/
+│
+├── iran_oil_dashboard.py
+├── iran_war_oil_prices_daily_2026.csv
+├── requirements.txt
 ├── README.md
-├── file1.ipynb                        # Main analysis notebook
-├── data/
-│   └── iran_war_oil_prices_daily_2026.csv
-├── outputs/
-│   └── figures/                       # Exported chart images
-└── requirements.txt
+└── assets/
 ```
 
 ---
 
-## 📊 Dataset
+## ▶️ Installation
 
-| Attribute | Details |
-|-----------|---------|
-| **Source** | 50-State Pump (USA), verified by Euronews |
-| **File** | `iran_war_oil_prices_daily_2026.csv` |
-| **Frequency** | Daily |
-| **Coverage** | Duration of Iran War conflict phases |
-
-### Key Columns
-
-| Column | Description |
-|--------|-------------|
-| `date` | Observation date |
-| `brent_usd_barrel` | Brent crude — World Benchmark (USD/barrel) |
-| `wti_usd_barrel` | WTI crude — US Benchmark (USD/barrel) |
-| `dubai_usd_barrel` | Dubai crude — Gulf Benchmark (USD/barrel) |
-| `us_gas_avg_gallon` | Average US retail gasoline price (USD/gallon) |
-| `us_diesel_avg_gallon` | Average US retail diesel price (USD/gallon) |
-| `strait_hormuz_daily_ships` | Daily ship count through Strait of Hormuz |
-| `iran_production_mbpd` | Iran oil production (million barrels/day) |
-| `war_day` | Sequential conflict day number |
-| `phase` | War phase label (categorical) |
-
-### Derived Feature
-
-```python
-df['price_spread'] = df['brent_usd_barrel'] - df['wti_usd_barrel']
-```
-> Measures the Brent–WTI spread, a standard proxy for regional supply-demand imbalances.
-
----
-
-## 🛠️ Tech Stack
-
-| Library | Purpose |
-|---------|---------|
-| `NumPy` | Numerical computations |
-| `Pandas` | Data loading, cleaning, aggregation |
-| `Matplotlib` | Line, bar, histogram, pie, subplot charts |
-| `Seaborn` | Statistical charts — box, violin, scatter, barplot |
-
----
-
-## 🔍 Analysis Pipeline
-
-### 1. Data Inspection
-```python
-df.info()          # Column types and null counts
-df.shape           # Dimensions
-df.describe()      # Statistical summary
-df.isnull().sum()  # Missing values
-```
-
-### 2. Data Cleaning
-```python
-df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
-df['phase'].unique()    # Explore categories
-df['phase'].nunique()   # Count unique phases
-```
-
-### 3. Filtering & Slicing
-```python
-df[df['us_gas_avg_gallon'] < 3]                            # Gas below $3
-df[(df['brent_usd_barrel'] >= 80) & (df['brent_usd_barrel'] <= 100)]  # Brent 80–100
-df[df['war_day'] <= 10]                                    # First 10 war days
-df.sort_values(by='price_spread')                          # Sort by spread
-```
-
-### 4. Aggregation
-```python
-# Average Brent price per phase
-df.groupby('phase')[['brent_usd_barrel']].mean()
-
-# Max/min per phase
-df.groupby('phase')['brent_usd_barrel'].agg(['max', 'min'])
-
-# Multi-column aggregation
-df.groupby('phase').agg({
-    'brent_usd_barrel': ['max', 'min', 'mean'],
-    'wti_usd_barrel':   ['max', 'min', 'mean', 'count'],
-    'dubai_usd_barrel': ['max', 'min', 'mean', 'sum']
-})
-```
-
----
-
-## 📈 Visualizations
-
-| Chart | Variables | Insight |
-|-------|-----------|---------|
-| **Line Chart** | Brent, WTI, Dubai over time | Benchmark synchrony and divergence |
-| **Bar Chart** | Avg Brent price per phase | Phase-level price elevation |
-| **Subplot (1×2)** | Oil prices + Fuel prices | Crude-to-retail correlation |
-| **Histogram** | Iran oil production | Distribution shape and production range |
-| **Pie Chart** | Phase distribution | Time share per war phase |
-| **Seaborn Line** | Brent trend by phase | Phase-coloured price evolution |
-| **Seaborn Bar** | Ships per phase (Hormuz) | Shipping activity vs. conflict intensity |
-| **Scatter Plot** | Brent vs Gas (phase + ship size) | Multi-variable relationship |
-| **Box Plot** | Brent distribution per phase | Spread and outliers by phase |
-| **Violin Plot** | Strait of Hormuz ship count | Full density of shipping volume |
-| **Catplot Bar** | Diesel price per phase | Retail fuel variation by phase |
-
----
-
-## 💡 Key Findings
-
-- 📈 **Oil prices rise continuously** during active conflict phases, reflecting supply-risk premiums
-- 🔗 **Brent, WTI, and Dubai** move in tandem but with measurable spreads driven by regional logistics
-- 🚢 **Strait of Hormuz shipping activity** is a leading indicator of energy market stress
-- ⛽ **US retail fuel prices** closely trail crude movements with a short lag
-- 📊 **Phase-level aggregations** confirm escalation periods correlate with peak price volatility
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Python 3.8+
-- Jupyter Notebook or JupyterLab
-
-### Installation
+### Clone the Repository
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/<your-username>/iran-war-oil-price-eda.git
-cd iran-war-oil-price-eda
+git clone https://github.com/your-username/iran-war-oil-dashboard.git
+cd iran-war-oil-dashboard
+```
 
-# 2. Install dependencies
-pip install numpy pandas matplotlib seaborn jupyter
+### Install Dependencies
 
-# 3. Launch the notebook
-jupyter notebook file1.ipynb
+```bash
+pip install -r requirements.txt
+```
+
+### Run the Application
+
+```bash
+streamlit run iran_oil_dashboard.py
 ```
 
 ---
 
-## 📦 Requirements
+## 📸 Dashboard Screenshots
 
+Add screenshots after deployment:
+
+```markdown
+![Dashboard Overview](images/dashboard.png)
+![Price Analysis](images/price_analysis.png)
+![Data Explorer](images/data_explorer.png)
 ```
-numpy
-pandas
-matplotlib
-seaborn
-jupyter
-```
-
-> Save as `requirements.txt` and install with `pip install -r requirements.txt`
 
 ---
 
-## 📄 License
+## 💡 Business Value
 
-This project is open source and available under the [MIT License](LICENSE).
+This project demonstrates:
+
+- Data Analysis
+- Business Intelligence
+- Financial Analytics
+- Energy Market Research
+- Geopolitical Risk Analysis
+- Interactive Dashboard Development
+- Data Visualization Best Practices
 
 ---
 
-## 🙏 Acknowledgements
+## 👨‍💻 Author
 
-- **Data**: 50-State Pump Program (USA)
-- **Verification**: [Euronews](https://www.euronews.com)
-- **Analysis**: Python data science ecosystem — NumPy, Pandas, Matplotlib, Seaborn
+**Rahul**
+
+AI/ML | Machine Learning Engineer | Deep Learning Enthusiast
+
+GitHub: https://github.com/harsh-raj-sudo
+
+LinkedIn: https://www.linkedin.com/in/harsh-raj-9a1075382/
 
 ---
 
-*Built with Python · Data Science · Geopolitical Analysis*
+## ⭐ Support
+
+If you found this project useful, please consider giving it a star on GitHub.
